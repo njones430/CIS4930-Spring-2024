@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: Movie Ticket Sales API
+  description: API designed to allow customers to purchase movie tickets at their local theater online.
+  version: 0.1.9
+paths:
+  /users/{userId}:
+    get:
+      summary: Returns a movie ticket purchased by the user by user ID.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user that purchased the movie ticket.
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses: 
+        '200':
+          description: OK
+        '404':
+          description: 404 User ID Not Found
+    post:
+      summary: Creates a movie ticket.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user that purchased the movie ticket.
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+        - name: type
+          in: path
+          required: true
+          description: The type of ticket that the user purchased
+          schema:
+            type : string
+            format: 
+            minimum: 1
+        - name: movie
+          in: path
+          required: true
+          description: The name of the movie that the ticket is for.
+          schema:
+            type : string
+            format: 
+            minimum: 1
+      requestBody:
+        required: true
+        content: A movie ticket which corresponds to a specific type of ticket for a specific movie. 
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+      responses: 
+        '201':
+          description: Matinee movie ticket for "La La Land" created.
+        '202':
+          description: Child movie ticket for "The Incredibles" created.
+    delete:
+      summary: Deletes a movie ticket.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user that purchased the movie ticket.
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses:
+        '203':
+          description: Sucessfully deleted ticket.
+        '400':
+          description: There is no ticket attached to this user ID.
+        '404': 
+          description: 404 User ID Not Found
